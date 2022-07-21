@@ -1,0 +1,58 @@
+{
+	"name": "chainset",
+	"version": "0.0.0-semantic-release",
+	"description": "Set object values using property chaining syntax",
+	"keywords": [
+		"chain",
+		"set",
+		"object",
+		"property",
+		"deep"
+	],
+	"license": "MIT",
+	"repository": "privatenumber/chainset",
+	"funding": "https://github.com/privatenumber/chainset?sponsor=1",
+	"author": {
+		"name": "Hiroki Osame",
+		"email": "hiroki.osame@gmail.com"
+	},
+	"files": [
+		"dist"
+	],
+	"main": "./dist/index.js",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		"types": "./dist/index.d.ts",
+		"require": "./dist/index.js",
+		"import": "./dist/index.mjs"
+	},
+	"imports": {
+		"#chainset": {
+			"types": "./src/index.ts",
+			"development": "./src/index.ts",
+			"default": "./dist/index.mjs"
+		}
+	},
+	"scripts": {
+		"build": "pkgroll --target=node12.19 --minify",
+		"lint": "eslint --cache .",
+		"pretest": "npm run build",
+		"test": "tsx tests",
+		"dev": "tsx watch --conditions=development tests",
+		"prepack": "clean-pkg-json"
+	},
+	"devDependencies": {
+		"@pvtnbr/eslint-config": "^0.26.2",
+		"@types/node": "^18.0.3",
+		"clean-pkg-json": "^1.0.0",
+		"eslint": "^8.19.0",
+		"manten": "^0.2.1",
+		"pkgroll": "^1.3.1",
+		"tsx": "^3.7.1",
+		"typescript": "^4.7.4"
+	},
+	"eslintConfig": {
+		"extends": "@pvtnbr"
+	}
+}
