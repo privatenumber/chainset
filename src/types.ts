@@ -10,5 +10,5 @@ export type Options = {
 		| (PropertyKey | RegExp)[]
 		| ((key: PropertyKey, object: AnyObject) => boolean);
 
-	defaultObject?: () => AnyObject;
+	defaultObject?: (key?: PropertyKey) => AnyObject;
 }

@@ -112,7 +112,7 @@ A regular expression pattern, array of strings/patterns, or function that restri
 
 ##### defaultObject
 
-Type: `() => object`
+Type: `(key?: string) => object`
 
 Default: `() => Object.create(null)`
 

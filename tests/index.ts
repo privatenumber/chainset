@@ -48,22 +48,40 @@ describe('chainset', ({ test, describe }) => {
 		});
 	});
 
-	test('defaultObject to use null prototype', () => {
-		const objectNullPrototype = chainset();
+	describe('defaultObject', ({ test }) => {
+		test('use null prototype', () => {
+			const objectNullPrototype = chainset();
 
-		expect('hasOwnProperty' in objectNullPrototype).toBe(false);
+			expect('hasOwnProperty' in objectNullPrototype).toBe(false);
 
-		objectNullPrototype.a.b = 2;
+			objectNullPrototype.a.b = 2;
 
-		expect('hasOwnProperty' in objectNullPrototype.a).toBe(false);
+			expect('hasOwnProperty' in objectNullPrototype.a).toBe(false);
 
-		const objectNormal = chainset({}, {
-			defaultObject: () => ({}),
+			const objectNormal = chainset({}, {
+				defaultObject: () => ({}),
+			});
+
+			objectNormal.a.b = 2;
+
+			expect('hasOwnProperty' in objectNormal.a).toBe(true);
 		});
 
-		objectNormal.a.b = 2;
+		test('conditional by path', () => {
+			const object = chainset({}, {
+				defaultObject: (key) => {
+					// eslint-disable-next-line @typescript-eslint/no-empty-function
+					function constructor() {}
+					Object.defineProperty(constructor, 'name', { value: key });
 
-		expect('hasOwnProperty' in objectNormal.a).toBe(true);
+					// @ts-expect-error fake constructor
+					return new constructor();
+				},
+			});
+
+			expect(object.a.constructor.name).toBe('a');
+			expect(object.a.b.constructor.name).toBe('b');
+		});
 	});
 
 	describe('allowedKeys', ({ test }) => {

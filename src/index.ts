@@ -7,30 +7,30 @@ const chainset = (
 	object: AnyObject = defaultObject(),
 	options: Options = {},
 ): AnyObject => new Proxy(object, {
-	get(target, prop) {
-		if (prop in target) {
-			return target[prop];
+	get(targetObject, keyName) {
+		if (keyName in targetObject) {
+			return targetObject[keyName];
 		}
 
-		if (disallowed.has(prop)) {
+		if (disallowed.has(keyName)) {
 			return;
 		}
 
 		const { allowedKeys } = options;
 		if (allowedKeys) {
 			if (typeof allowedKeys === 'function') {
-				if (!allowedKeys(prop, target)) {
+				if (!allowedKeys(keyName, targetObject)) {
 					return;
 				}
 			} else if (allowedKeys instanceof RegExp) {
-				if (typeof prop === 'string' && !allowedKeys.test(prop)) {
+				if (typeof keyName === 'string' && !allowedKeys.test(keyName)) {
 					return;
 				}
 			} else if (Array.isArray(allowedKeys)) {
 				const found = allowedKeys.find(pattern => (
 					pattern instanceof RegExp
-						? typeof prop === 'string' && pattern.test(prop)
-						: prop === pattern
+						? typeof keyName === 'string' && pattern.test(keyName)
+						: keyName === pattern
 				));
 
 				if (!found) {
@@ -39,7 +39,7 @@ const chainset = (
 			}
 		}
 
-		let newObject = (options.defaultObject || defaultObject)();
+		let newObject = (options.defaultObject || defaultObject)(keyName);
 		const { deep = true } = options;
 		if (deep) {
 			const newOptions = {
@@ -50,7 +50,7 @@ const chainset = (
 			newObject = chainset(newObject, newOptions);
 		}
 
-		target[prop] = newObject;
+		targetObject[keyName] = newObject;
 
 		return newObject;
 	},
