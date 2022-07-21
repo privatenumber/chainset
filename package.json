@@ -1,0 +1,37 @@
+{
+  "name": "chainset",
+  "version": "0.0.0-semantic-release",
+  "description": "Set object values using property chaining syntax",
+  "keywords": [
+    "chain",
+    "set",
+    "object",
+    "property",
+    "deep"
+  ],
+  "license": "MIT",
+  "repository": "privatenumber/chainset",
+  "funding": "https://github.com/privatenumber/chainset?sponsor=1",
+  "author": {
+    "name": "Hiroki Osame",
+    "email": "hiroki.osame@gmail.com"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "require": "./dist/index.js",
+    "import": "./dist/index.mjs"
+  },
+  "imports": {
+    "#chainset": {
+      "types": "./src/index.ts",
+      "development": "./src/index.ts",
+      "default": "./dist/index.mjs"
+    }
+  }
+}
