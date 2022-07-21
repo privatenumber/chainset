@@ -59,8 +59,6 @@ console.log(object)
 
 ### Use an existing object
 ```ts
-import chainset from 'chainset'
-
 const object = chainset({
     foo: {
         bar: {}
@@ -89,6 +87,10 @@ console.log(object)
 ### chainset(object, options)
 
 #### object
+Type: `object`
+
+Default: `Object.create(null)` (a pure, prototype-less object)
+
 The object to ehance with "chain-setting" support.
 
 #### options
@@ -103,9 +105,9 @@ How deep to add automatic object initialization support on access. Set to `true`
 
 ##### allowedKeys
 
-Type: `RegExp | (string|RegExp)[]`
+Type: `RegExp | (string|RegExp)[] | (path, object) => boolean`
 
-A regular expression pattern or array of strings/patterns that restrict what property names will be initialized on access.
+A regular expression pattern, array of strings/patterns, or function that restrict what property names will be initialized on access.
 
 
 ##### defaultObject

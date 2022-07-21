@@ -5,7 +5,10 @@ export type AnyObject = {
 export type Options = {
 	deep?: boolean | number;
 
-	allowedKeys?: RegExp | (PropertyKey | RegExp)[];
+	allowedKeys?:
+		RegExp
+		| (PropertyKey | RegExp)[]
+		| ((key: PropertyKey, object: AnyObject) => boolean);
 
 	defaultObject?: () => AnyObject;
 }

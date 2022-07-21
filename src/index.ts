@@ -18,7 +18,11 @@ const chainset = (
 
 		const { allowedKeys } = options;
 		if (allowedKeys) {
-			if (allowedKeys instanceof RegExp) {
+			if (typeof allowedKeys === 'function') {
+				if (!allowedKeys(prop, target)) {
+					return;
+				}
+			} else if (allowedKeys instanceof RegExp) {
 				if (typeof prop === 'string' && !allowedKeys.test(prop)) {
 					return;
 				}

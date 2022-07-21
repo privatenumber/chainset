@@ -104,5 +104,22 @@ describe('chainset', ({ test, describe }) => {
 				object.b.c = 1;
 			}).toThrow('Cannot set properties of undefined (setting \'c\')');
 		});
+
+		test('function', () => {
+			const object = chainset({}, {
+				allowedKeys: key => key === 'specific',
+			});
+
+			object.specific.specific.b = 1;
+
+			expect(object).toEqual({
+				specific: {
+					specific: { b: 1 },
+				},
+			});
+			expect(() => {
+				object.b.c = 1;
+			}).toThrow('Cannot set properties of undefined (setting \'c\')');
+		});
 	});
 });
